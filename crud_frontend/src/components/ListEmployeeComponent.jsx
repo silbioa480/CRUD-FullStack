@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import EmployeeService from "../services/EmployeeService";
 
-export class ListEmployeeComponent extends Component {
+class ListEmployeeComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -32,11 +32,13 @@ export class ListEmployeeComponent extends Component {
             </thead>
             <tbody>
               {this.state.employees.map((employee) => {
-                <tr key={employee.id}>
-                  <td>{employee.firstName}</td>
-                  <td>{employee.lastName}</td>
-                  <td>{employee.emailId}</td>
-                </tr>;
+                return (
+                  <tr key={employee.id}>
+                    <td>{employee.firstName}</td>
+                    <td>{employee.lastName}</td>
+                    <td>{employee.emailId}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </table>
