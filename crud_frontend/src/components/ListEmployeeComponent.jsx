@@ -36,6 +36,11 @@ function ListEmployeeComponent() {
                   <td>{employee.firstName}</td>
                   <td>{employee.lastName}</td>
                   <td>{employee.emailId}</td>
+                  <td>
+                    <Link to={`update-employee/${employee.id}`}>
+                      <button className="btn btn-info">Update</button>
+                    </Link>
+                  </td>
                 </tr>
               );
             })}
