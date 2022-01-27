@@ -11,15 +11,15 @@ function CreateEmployeeComponent() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id == "_add") return;
+    if (id === "_add") return;
 
     EmployeeService.getEmployeeById(id).then((res) => {
-      let employee = res.data;
-      setFirstName(employee.firstName);
-      setLastName(employee.lastName);
-      setEmailId(employee.emailId);
+      let emp = res.data;
+      setFirstName(emp.firstName);
+      setLastName(emp.lastName);
+      setEmailId(emp.emailId);
     });
-  }, []);
+  }, [id]);
 
   const saveOrUpdateEmployee = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ function CreateEmployeeComponent() {
     };
     console.log("employee => " + JSON.stringify(employee));
 
-    if (id == "_add") {
+    if (id === "_add") {
       EmployeeService.createEmployee(employee).then((res) => {
         navigate("/employees");
       });
@@ -53,7 +53,7 @@ function CreateEmployeeComponent() {
   };
 
   const getTitle = () => {
-    if (id == "_add") return "Add Employee";
+    if (id === "_add") return "Add Employee";
     else return "Update Employee";
   };
 
