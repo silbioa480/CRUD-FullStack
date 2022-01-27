@@ -1,15 +1,27 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import EmployeeService from "../services/EmployeeService";
 
 function CreateEmployeeComponent() {
+  const { id } = useParams();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [emailId, setEmailId] = useState("");
 
   const navigate = useNavigate();
 
-  const saveEmployee = (e) => {
+  useEffect(() => {
+    if (id == "_add") return;
+
+    EmployeeService.getEmployeeById(id).then((res) => {
+      let employee = res.data;
+      setFirstName(employee.firstName);
+      setLastName(employee.lastName);
+      setEmailId(employee.emailId);
+    });
+  }, []);
+
+  const saveOrUpdateEmployee = (e) => {
     e.preventDefault();
 
     let employee = {
@@ -19,9 +31,15 @@ function CreateEmployeeComponent() {
     };
     console.log("employee => " + JSON.stringify(employee));
 
-    EmployeeService.createEmployee(employee).then((res) => {
-      navigate("/employees");
-    });
+    if (id == "_add") {
+      EmployeeService.createEmployee(employee).then((res) => {
+        navigate("/employees");
+      });
+    } else {
+      EmployeeService.updateEmployee(employee, id).then((res) => {
+        navigate("/employees");
+      });
+    }
   };
 
   const changeFirstNameHandler = (event) => {
@@ -34,12 +52,17 @@ function CreateEmployeeComponent() {
     setEmailId(event.target.value);
   };
 
+  const getTitle = () => {
+    if (id == "_add") return "Add Employee";
+    else return "Update Employee";
+  };
+
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="card col-md-6 offset-md-3">
-            <h3 className="text-center">Add Employee</h3>
+            <h3 className="text-center">{getTitle()}</h3>
             <div className="card-body">
               <form action="" method="post">
                 <div className="form-group">
@@ -79,10 +102,13 @@ function CreateEmployeeComponent() {
                   />
                 </div>
 
-                <button className="btn btn-success" onClick={saveEmployee}>
+                <button
+                  className="btn btn-success"
+                  onClick={saveOrUpdateEmployee}
+                >
                   Save
                 </button>
-                <Link to="/employees">
+                <Link to="/">
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "10px" }}

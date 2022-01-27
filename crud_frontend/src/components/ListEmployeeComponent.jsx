@@ -15,7 +15,7 @@ function ListEmployeeComponent() {
     <div>
       <h2 className="text-center">Employees List</h2>
       <div className="row">
-        <Link to="add-employee">
+        <Link to="add-employee/_add">
           <button className="btn btn-primary">Add Employee</button>
         </Link>
       </div>
@@ -37,7 +37,7 @@ function ListEmployeeComponent() {
                   <td>{employee.lastName}</td>
                   <td>{employee.emailId}</td>
                   <td>
-                    <Link to={`update-employee/${employee.id}`}>
+                    <Link to={`add-employee/${employee.id}`}>
                       <button className="btn btn-info">Update</button>
                     </Link>
                   </td>
