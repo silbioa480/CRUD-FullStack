@@ -11,6 +11,11 @@ function ListEmployeeComponent() {
     });
   }, []);
 
+  const deleteEmployee = (id) =>
+    EmployeeService.deleteEmployee(id).then((res) => {
+      setEmployees(employees.filter((employee) => employee.id !== id));
+    });
+
   return (
     <div>
       <h2 className="text-center">Employees List</h2>
@@ -40,6 +45,13 @@ function ListEmployeeComponent() {
                     <Link to={`add-employee/${employee.id}`}>
                       <button className="btn btn-info">Update</button>
                     </Link>
+                    <button
+                      style={{ marginLeft: "10px" }}
+                      className="btn btn-danger"
+                      onClick={() => deleteEmployee(employee.id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
