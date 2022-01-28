@@ -52,6 +52,14 @@ function ListEmployeeComponent() {
                     >
                       Delete
                     </button>
+                    <Link to={`view-employee/${employee.id}`}>
+                      <button
+                        style={{ marginLeft: "10px" }}
+                        className="btn btn-info"
+                      >
+                        View
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               );
